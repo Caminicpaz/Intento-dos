@@ -348,3 +348,5 @@ str(trail) --> da más información
 quantile(trail$CAM_NUM,na.rm=TRUE)
 
 quantile(trail$CAM_NUM,probs=c(0.5,0.75,0.9)) 
+
+holaaaaaa
