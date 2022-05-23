@@ -209,8 +209,70 @@ if (!file.exists ("data")) {
 dir.create("data")
 }
 
+
+Getting and cleaning data, SEMANA 1
 Library(data.table)
 DF = data.frame(x=rorm(9), y=rep/c("a", "b", "c"), each=3), z=rnorm(9))
 head(DF,3)
 head(DF,3)
-holaaaaa
+
+
+library(XML)
+fileURL <- "https://www.w3schools.com/xml/simple.xml"
+doc <-xmlTreeParse(fileURL,useInternal=TRUE)
+rootNode <- xmlRoot(doc)
+xmlName(rootName)
+
+fileURL <- "http://espn.go.com/nfl/team/_/name/bal/baltimore-ravens"
+doc<-htmlTreeParse(fileURL,useInternal=TRUE)
+scores&-xpathSApply(doc,"//Li(@class='score']",xm(Value)
+teas <- xpathSApply(doc,"//Li[@class='team-name']",xmlValue)
+scores
+
+library(data.table)
+DT = data.frame("x"=rnorm(9),"y"=rep(c("a","b","c"),each=3),"z"=rnorm(9))
+
+head(DT,3)
+
+tables()
+
+DT[2,]
+
+DT[DT$y="a",]
+
+DT[c(2,3)]
+
+DT[,list(mean(y),sum(y))]
+
+DT[,w:=y^2] --> añadir nuevas columnas
+
+DT[,table(y)]
+
+DT[,m:= (tmp <- (x+z); log2(tmp+5)}] --> con muchas operaciones 
+
+DT[,a:=y>0] --> añadir nueva columna con cosas verdadero y falso 
+
+DT <- data.table(x=rep(c("a","b","c"),each=100), y=rnorm(300))
+setkey(DT,x)
+DT['a']
+
+DT1 <- data.table(x=c("a"","a","b","dt1"), y=1:4)
+DT2 <- data.table(x=c('a','b','dt2'), z=5:7)
+setkey(DT1,x); setkey(DT2,x)
+merge(DT1,DT2)
+
+big_df <- data.frame(x=rnorm(1E6), y=rnorm(1E6))
+file <- tempfile()
+write.tab]e(big_df, filesfile, row.names=FALSE, col.names=TRUE, sep="'\t", quote=FALSE)
+system.time(fread(file))
+
+system.time(read.table(file,header=TRUE,sep="\t"))+
+
+
+Getting and cleaning data , SEMANA 2
+
+ucscDb <- dbConnect(MySQL(), user="genome",host="genome-mysql.cse.ucsc.edu")
+
+result <- dbGetQuery(ucscDb,"show databases;"); dbDisconnect(ucscDb);
+
+
