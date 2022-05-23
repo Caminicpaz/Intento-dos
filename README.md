@@ -275,4 +275,76 @@ ucscDb <- dbConnect(MySQL(), user="genome",host="genome-mysql.cse.ucsc.edu")
 
 result <- dbGetQuery(ucscDb,"show databases;"); dbDisconnect(ucscDb);
 
+hg19 <- dbConnect(MySQL(),user="genome",db="hg19"',
+host="genome-mysql.cse.ucsc.edu")
+allTables<-dbListTables(hg19)
+length(allTables)
 
+library(XML)
+url <- "http://scholar.google.com/citations?user-HI-I6COAAAAJ&hl=en"
+html <- htmlTreeParse(url,useInternalNodes=T)
+xpathSApply(html,"//title",xmlValue)
+
+library(httr); html2 = GET(url)
+content2 = content(html2,as="text")
+parsedHtml = htmlParse(content2,asText=TRUE)
+xpathSApply(parsedHtml,"//title",xmlValue)
+
+
+Getting and cleaning data , SEMANA 3
+
+set.seed(13435)
+X <- data.frame("var1"=sample(1:5),"var2"=sample(6:10),"var3"=sample(11:15))
+X <- X[sample(1:5),]; X$var2[c(1,3)] = NA
+X
+
+X[,1] --> primera columna
+
+X[,"var1"] --> primera columna
+
+X[1:2,"var2"]
+
+X[ (X$var1 <= 3 & X$var3 > 11),] --> cosas LOGICAS, si la variable es igual a 3 Y mayor a 11
+
+X[(X$var1 <= 3 | X$var3 > 15),] --> cosas LOGICAS, si la variable es igual a 3 O(|) mayor a 15
+
+X[which(X$var2 > 8),] --> quita los NA
+
+sort(X$var1)
+
+sort (X$var1, decreasing=TRUE)
+
+sort (X$var2, na.last=TRUE)
+
+X[order(X$var1),] --> ordenar en orden ascendete todas las variable respecto a una variable
+
+X[order(X$var1,X$var3),]
+
+library(plyr)
+arrange (X, var1)
+
+arrange(X,desc(var1))
+
+X$var4 <- rnorm(5) --> añadir columnas
+X
+
+Y <- cbind(X,rnorm(5)) 
+Y
+
+BAJAR INFO DE LA WEB
+if(!file.exists("./data")){dir.create("./data")}
+fileUrl <- "https://data.baltimorecity.gov/api/views/k5ry-ef3g/rows.csv?accessType=DOWNLOAD"
+download.file(fileUrl,destfile="./data/restaurants.csv",method="curl")
+trail <- read.csv("./data/restaurants.csv")
+
+head(trail,n=3) --> 3 filas que estan en la cabeza
+
+tail(trail,n=3) --> 3 filas que estan en la parte de abajo
+
+summary(trail)
+
+str(trail) --> da más información
+
+quantile(trail$CAM_NUM,na.rm=TRUE)
+
+quantile(trail$CAM_NUM,probs=c(0.5,0.75,0.9)) 
