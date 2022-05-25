@@ -349,4 +349,128 @@ quantile(trail$CAM_NUM,na.rm=TRUE)
 
 quantile(trail$CAM_NUM,probs=c(0.5,0.75,0.9)) 
 
-holaaaaaa
+sum(is.na(trail$CAM_NUM)) --> check missing values
+
+any(is.na(trail$CAM_NUM))
+
+all(trail$CAM_NUM > 0)
+
+colSums(is.na(trail)) --> row and column sums
+
+all(colSums(is.na(trail))=0)
+
+s1<- seq(1,10, by=2) ; s1
+
+s2<- seq(1,10, length=3); s2
+
+x <- c(1,3,8,25,100); seq(along = x)
+
+Reshaping data
+
+library(reshape2)
+head(mtcars)
+
+Melting data frames --> le identifica como variable id a "carname","gear","cyl", y como variable medible a "mpg","hp"
+
+mtcars$carname <- rownames(mtcars)
+carMelt <- melt(mtcars, id=c("carname","gear","cyl"),measure.vars=c("mpg","hp"))
+head(carMelt,n=3)
+
+cylData <- dcast(carMelt, cyl ~ variable)
+cylData
+
+cylData <- dcast (carMelt, cyl ~ variable, mean)
+cylData
+
+ddply(InsectSprays,.(spray),summarize,sum=sum(count))
+
+spraySums <- ddply(InsectSprays,.(spray),summarize,sum-ave(count, FUN=sum))
+dim(spraySums)
+
+str(trail)
+
+names(trail)
+
+library(plyr)
+head(select(trail,PROJ:created_date))
+
+filter(trail,"XCOORD">30) -> lol
+
+head(lol,10)
+
+arrange(trail,created_date) -> loldated
+head(loldated)
+
+arrange(trail,desc(created_date)) -> loldatedd
+head(loldatedd)
+
+rename(trail, OBJECTID = CAMARA, NOTES = NOTAS) -> ctrail
+
+SEMANA 4
+if(!file.exists("./data")){dir.create("./data")}
+fileUrl1= "https://dl.dropboxusercontent.com/u/7710864/data/reviews-apr29.csv"
+fileUrl2= "https://dl.dropboxusercontent.com/u/7710864/data/solutions-apr29.csv"
+download.file(fileUrl1,destfile="./data/reviews.csv",method="curl")
+download.file(fileUrl2,destfile="./data/solutions.csv",method="curl")
+
+reviews = read.csv("./data/reviews.csv");solutions <- read.csv("./data/solutions.csv")
+
+head(reviews,2)
+
+head(solutions,2)
+
+Merges data frames
+Important parameters: x,y,by,by.x,by.y, all
+
+mergedData=merge(reviews,solutions,by.×="solution_id",by.y="id",all=TRUE)
+head(mergedData)
+
+Default - merge all common column names
+
+intersect(names(solutions),names(reviews))
+
+mergedData2= merge(reviews,solutions,all=TRUE)
+head(mergedData2)
+
+Fixing character vectors - tolower(), toupper()
+if(!file.exists("./data")){dir.create("./data")}
+fileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD"
+download.file(fileUrl,destfile="./data/cameras.csv",method-"curl")
+cameraData<-read.csv("./data/cameras.csv")
+names (cameraData)
+
+tolower(names(cameraData))
+
+Fixing character vectors - strsplit --> separa cosas separadas por puntos, etc
+
+splitNames=strsplit(names(cameraData),"(\.")
+splitNames [[6]]
+-> Antes: location.1
+-> Después: "location" "1"
+
+Fixing character vectors - sapply()
+splitNames [[6]] [1]
+-> [1] "Location"
+
+firstElement <- function(x){x[1]}
+sapply(splitNames,firstElement)
+-> [1] "address" "direction" "street" "crossStreet" "intersection" "Location"
+
+Fixing character vectors - sub()
+
+sub("_","", names (reviews),) --> quita el "_" y le reemplazo por "" los nombres de las varibles del documento reviews
+
+Fixing character vectors - gsub()
+
+testName <- "this_is_a_test"
+sub("_","",testName)
+gsub("_","",testName) --> Este ayuda a que se quiten TODOS los "_" o signos que se quieran quitar porque el de arriba solo quita el primer signo
+
+Finding values - grep(),grepl()--> encontrar cosas
+
+grep("'Alameda"',cameraData$intersection) --> encuentra en qué líneas están las cosas que estás buscando 
+
+table(grepl("'Alameda",cameraData$intersection)) --> encuentra ecuántas cosas estás buscando 
+
+grep("Alameda",cameraDatasintersection,value=TRUE) --> encuentra el contexto de la cosas que estás buscando 
+-> "The Alameda & 33rd St" "E 33rd & The Alameda" "Harford \n & The Alameda"
