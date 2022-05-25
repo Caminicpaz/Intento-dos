@@ -474,3 +474,75 @@ table(grepl("'Alameda",cameraData$intersection)) --> encuentra ecuántas cosas e
 
 grep("Alameda",cameraDatasintersection,value=TRUE) --> encuentra el contexto de la cosas que estás buscando 
 -> "The Alameda & 33rd St" "E 33rd & The Alameda" "Harford \n & The Alameda"
+
+More useful string functions
+
+library(stringr)
+nchar("Jeffrey Leek") --> número de caracteres
+
+substr ("Jeffrey Leek", 1,7) --> substrae de la primera palabra 7 letras
+
+paste("Jeffrey","Leek") --> le pone junto como "Jeffrey Leek"
+
+paste0 ("Jeffrey","Leek") --> [1] "JeffreyLeek"
+
+str trim("Jeff      ") --> hace que los espacios desaparezcan
+"Jeff"
+
+Regular expresions
+^ -> busca al principio de la línea
+$ -> busca al final de la línea. ej: morning$
+[Bb] -> para que acepte y busque los lowercase y uppercase
+
+Ej:
+^[0-9] [a-zA-Z] -> se busca al principio de la línea cualquier # y letra
+
+"." is used to refer to any character. So:
+9.11 --> 9-11, 9/11
+
+| --> Translates to "or"; we can use it to combine two expressions, the subexpressions being called alternatives
+flood|fire
+
+[Ggleorge( (wwl\.)? [Bb]ush --> si tiene interrogante significa que es OPCIONAL 
+
+\. --> considerar que es el punto LITERAL y no el metacharacter como el del 9.11
+
+(.*) -->The * and + signs are metacharacters used to indicate repetition; * means "any number, including
+none, of the item" and + means "at least one of the item"
+
+[Bb]ush( +[^ ]+ +){1,5} debate --> { and } are referred to as interval quantifiers; the let us specify the minimum and maximum number of matches of an expression. Aquí se trata de buscar Bush, seguido de un espacio ( + seguido de algo que NO sea un espacio [^]+ seguido de un espacio +). Las {} indican que esta indicaciçón que está en () se repiten de 1-5 veces hasta que llegue a debates. Bush con 5 palabras antes de que aparezca la palabra debate 
+
+m.n means at least m but not more than n matches
+m means exactly m matches
+m, means at least m matches
+
+matches of an expression
+
+DATES
+
+d1 = date()
+class(d1)
+
+d2 = Sys.Date()
+class(d2)
+
+-Formatting dates
+
+%d = day as number (0-31), %a = abbreviated weekday, %A = unabbreviated weekday, %m = month (00-
+12), %b = abbreviated month, %B = unabbrevidated month, %y = 2 digit year, %Y = four digit year
+
+format (d2, "%a %b %d"")
+
+-Creating dates
+
+x = c("1jan1960","2jan1960","31mar1960","30jul1960")
+as.Date(x,"%d%b%y") -> z
+z
+
+z[1]-z[2]
+
+as.numeric(z[1]-z[2])
+
+weekdays(d2) --> dia de la semana
+
+months(d2) --> mes del año
