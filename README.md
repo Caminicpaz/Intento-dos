@@ -569,3 +569,155 @@ hist(airquality$Ozone)
 library(datasets)
 with(airquality, plot(Wind, Ozone))
 
+library(datasets)
+airquality <- transform(airquality, Month = factor (Month))
+boxplot(Ozone ~ Month, airquality, xlab = "Month", ylab = "Ozone (ppb)")
+
+FUNCTIONS
+pch: the plotting symbol (default is open circle)
+lty: the line type (default is solid line), can be dashed, dotted, etc.
+lwd: the line width, specified as an integer multiple
+col: the plotting color, specified as a number, string, or hex code; the colors() function gives you
+a vector of colors by name
+xlab: character string for the x-axis label
+ylab: character string for the v-axis label
+las: the orientation of the axis labels on the plot
+bg: the background color
+mar: the margin size
+oma: the outer margin size (default is O for all sides)
+mfrow: number of plots per row, column (plots are filled row-wise)
+mfcol: number of plots per row, column (plots are filled column-wise)
+plot: make a scatterplot, or other type of plot depending on the class of the object being plotted
+lines: add lines to a plot, given a vector x values and a corresponding vector of y values (or a 2-
+column matrix); this function just connects the dots
+points: add points to a plot
+text: add text labels to a plot using specified x, y coordinates
+title: add annotations to x, y axis labels, title, subtitle, outer margin
+mtext: add arbitrary text to the margins (inner or outer) of the plot
+axis: adding axis ticks/labels
+
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City"))
+with(subset (airquality, Month == 5), points(Wind, Ozone, col =
+"blue")) --> los puntos azules son los que son del mes de mayo 
+
+with(airquality, plot (wind, Ozone, main = "Ozone and Wind in New York City", type= "n"))
+with(subset(airquality,Month == 5), points(Wind, Ozone, col = "blue"))
+with(subset(airquality, Month != 5), points(Wind, Ozone, col = "red"))
+legend("topright", Dch = 1, col = c("blue","red'), legend = c("May", "Other Months"))
+
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City", pch = 20))
+model <- lm(Ozone ~ Wind, airquality)
+abline(model, lwd = 2)
+
+par(mfrow = c(1, 2))
+with(airquality,{
+plot (Wind, Ozone, main = "Ozone and Wind")
+plot (Solar.R, Ozone, main = "Ozone and Solar Radiation")
+})
+
+par(mfrow = c(1, 3), mar = c(4, 4, 2, 1), oma = c(0, 0, 2, 0))
+with(airquality, {
+plot (Wind, Ozone, main = "Ozone and Wind")
+plot (Solar.R, Ozone, main = "Ozone and Solar Radiation")
+plot (Temp, Ozone, main = "Ozone and Temperature")
+mtext ("Ozone and Weather in New York City", outer = TRUE)
+})
+
+Copying a plot to another device 
+• dev. copy: copy a plot from one device to another
+• dev.Copv2pdf: specificallv copy a plot to a PDF file
+NOTE: Copying a plot is not an exact operation, so the result may not be identical to the original.
+library(datasets)
+with(faithful,plot(eruptions,waiting))
+## Create plot on screen device
+title(main = "Old Faithful Geyser data")
+## Add a main title
+dev.copy (png, file = "geyserplot.png") ## Copy my plot to a PNG file
+dev.off()
+##Don't forget to close the PNG device!
+
+Lattice Functions
+xyplot: this is the main function for creating scatterplots
+bwplot: box-and-whiskers plots ("boxplots")
+histogram: histograms
+stripplot: like a boxplot but with actual points
+dotplot: plot dots on "violin strings"
+splom: scatterplot matrix; like pairs in base plotting system
+levelplot, contourplot: for plotting "image" data
+Lattice functions generally take a formula for their first argument, usually of the form
+xyplot(y ~ x | f * g, data)
+• We use the formula notation here, hence the ~,
+On the left of the ~ is the y-axis variable, on the right is the x-axis variable
+• f and g are conditioning variables - they are optional
+the * indicates an interaction between two variables
+
+library(lattice)
+library(datasets)
+## Simple scatterplot
+xyplot (Ozone ~ Wind, data = airquality)
+
+library(datasets)
+library(lattice)
+## Convert 'Month' to a factor variable
+airquality <- transform(airquality, Month = factor (Month))
+xyplot (Ozone ~ Wind | Month, data = airquality, layout = c(5, 1))
+
+
+SEMANA 3
+
+set.seed(1)
+par(mfrow = c(1, 1))
+x <- rnorm(12, mean = rep(1:3, each = 4), sd = 0.2)
+y <- rnorm(12, mean = rep(c(1, 2, 1), each = 4), sd = 0.2)
+plot(x, y, col = "blue", pch = 19, cex = 2)
+text (x + 0.05, y + 0.05, labels = as.character(1:12))
+
+dataframe <- data.frame(x, y)
+kmeansobj <- kmeans(dataFrame, centers = 3)
+names(kmeansobj)
+
+dataFrame <- data.frame(x = x, y = y)
+dist(dataFrame)
+Nos ayuda a ver la distancia
+
+par(mar = rep(0.2, 4))
+plot(x, y, col = kmeansobj$cluster, pch = 19, cex = 2)
+points(kmeansobj$centers, col = 1:3, pch = 3, cex = 3, lwd = 3)  
+
+merge(5,6) -> u
+plot(u, col = "orange")
+
+
+dataFrame <- data.frame(x = x, y = y)
+distxy <- dist(dataFrame)
+hClustering <- hclust(distxy)
+plot(hClustering)
+myplclust(hClustering, lab = rep(1:3, each = 4), lab.col = rep(1:3, each = 4))
+
+dataFrame <- data.frame(x = x, y = y)
+set.seed(143)
+dataMatrix <- as.matrix(dataFrame)[sample(1:12),]
+heatmap(dataMatrix)
+
+set.seed(1234)
+dataMatrix <-as.matrix(dataFrame)[sample(1:12), ]
+kmeansobj2 <- kmeans(dataMatrix, centers = 3)
+par(mfrow = c(1, 2), mar = c(2, 4, 0.1, 0.1))
+image(t(dataMatrix)[, nrow(dataMatrix):1], yaxt = "n")
+image(t(dataMatrix)[, order(kmeansobj$cluster)], yaxt = "n")
+
+set.seed(678910)
+for (i in 1:40) {
+# flip a coin
+coinFlip <- rbinom(1, size = 1, prob = 0.5)
+# if coin is heads add a common pattern to that row
+if (coinFlip) {
+dataMatrix[i, ] <- dataMatrix[i, ] + rep(c(0,3), each = 5)
+}
+}
+
+
+
+
+
+
