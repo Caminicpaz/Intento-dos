@@ -269,7 +269,7 @@ system.time(fread(file))
 system.time(read.table(file,header=TRUE,sep="\t"))+
 
 
-Getting and cleaning data , SEMANA 2
+Getting and cleaning data, SEMANA 2
 
 ucscDb <- dbConnect(MySQL(), user="genome",host="genome-mysql.cse.ucsc.edu")
 
@@ -393,9 +393,7 @@ names(trail)
 
 library(plyr)
 head(select(trail,PROJ:created_date))
-
 filter(trail,"XCOORD">30) -> lol
-
 head(lol,10)
 
 arrange(trail,created_date) -> loldated
@@ -678,15 +676,12 @@ names(kmeansobj)
 
 dataFrame <- data.frame(x = x, y = y)
 dist(dataFrame)
-Nos ayuda a ver la distancia
+
+#Nos ayuda a ver la distancia
 
 par(mar = rep(0.2, 4))
 plot(x, y, col = kmeansobj$cluster, pch = 19, cex = 2)
 points(kmeansobj$centers, col = 1:3, pch = 3, cex = 3, lwd = 3)  
-
-merge(5,6) -> u
-plot(u, col = "orange")
-
 
 dataFrame <- data.frame(x = x, y = y)
 distxy <- dist(dataFrame)
@@ -716,8 +711,21 @@ dataMatrix[i, ] <- dataMatrix[i, ] + rep(c(0,3), each = 5)
 }
 }
 
+set.seed(12345)
+par(mar = rep(0.2, 4))
+dataMatrix <- matrix(rnorm(400), nrow = 40)
+image(1:10, 1:40, t(dataMatrix) [, nrow(dataMatrix):1])
 
+par(mar = rep(0.2, 4))
+heatmap(dataMatrix)
 
-
-
+set.seed(678910)
+for (i in 1:40) {
+#flip a coin
+coinFlip <- rbinom(1, size = 1, prob = 0.5)
+# if coin is heads add a common pattern to that row
+if (coinFlip) {
+dataMatrix[i, ] <- dataMatrixli, I + rep(c(0, 3), each = 5)
+}
+}
 
