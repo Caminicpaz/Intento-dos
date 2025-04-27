@@ -729,5 +729,36 @@ dataMatrix[i, ] <- dataMatrixli, I + rep(c(0, 3), each = 5)
 }
 }
 
-HOla!!! 2025
-Nuevos camnios
+#HOla!!! 2025
+#Nuevos cambios
+
+#Clase 1 
+
+5+6
+5 -> a
+6 -> b
+a+b
+a*b
+sum(a,b)
+
+name <- c("Camila", "Ana", "Amalia")
+name
+
+age <- c(30, 48, 34)
+gender <- c("F", "F", "F")
+
+age
+gender
+
+friends <- data.frame(name, age, gender) 
+friends
+friends$name
+friends [1,1:3]
+friends [friends$age<40,1:2]
+
+library(tidyverse)
+friends %>%
+  select(name, age) %>%
+  filter(age < 40)  %>%
+  arrange(age)
+
