@@ -1,4 +1,4 @@
-# Intento-dos
+# Intento-dos 
 Este es un repositorio de prueba
 :)
 title: "My first markdown"
@@ -753,12 +753,14 @@ gender
 friends <- data.frame(name, age, gender) 
 friends
 friends$name
-friends [1,1:3]
+friends [1,1:2]
 friends [friends$age<40,1:2]
 
-library(tidyverse)
+library("tidyverse")
 friends %>%
   select(name, age) %>%
   filter(age < 40)  %>%
   arrange(age)
+  
+  #se termina la clase!!
 
